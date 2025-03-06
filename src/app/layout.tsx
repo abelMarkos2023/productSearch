@@ -29,6 +29,9 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <script async src="https://cse.google.com/cse.js?cx=c1b45ecaee5804e48">
+</script>
+
     </html>
   );
 }
