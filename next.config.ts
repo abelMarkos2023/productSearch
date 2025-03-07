@@ -1,4 +1,5 @@
 const fs = require('fs');
+import { hostname } from 'os';
 import { Configuration } from 'webpack';
 
 /** @type {import('next').NextConfig} */
@@ -28,6 +29,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**", // Allows images from any domain
       },
+      {
+        protocol: "http",
+        hostname: "**"
+      }
     ],
   },
 };

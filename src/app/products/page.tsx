@@ -31,7 +31,7 @@ export default function DataTable() {
 
       {/* Hero Section */}
       <div
-        className="h-[50vh] flex flex-col items-center justify-center text-center text-white px-6 mb-12"
+        className="h-[50vh] flex flex-col items-center justify-center text-center text-white px-6"
         style={{ 
           backgroundImage: "url('/list.webp')",
           backgroundSize: "cover",
@@ -46,10 +46,11 @@ export default function DataTable() {
   
 
       {/* Table */}
-      <div className="max-w-7xl mx-auto px-4 py-6 overflow-x-auto">
-        <table className="w-full border-collapse rounded-lg overflow-hidden shadow-lg bg-white">
+      <div className="w-full bg-grad-4 pb-12">
+      <div className="max-w-7xl mx-auto px-4 py-6 overflow-x-auto ">
+        <table className="w-full border-collapse rounded-lg overflow-hidden shadow-lg">
           <thead>
-            <tr className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-left">
+            <tr className="bg-gradient-to-r from-blue-600 to-blue-500 text-white">
               <th className="p-4">POLYMER</th>
               <th className="p-4">CATEGORY</th>
               <th className="p-4">BRAND</th>
@@ -60,7 +61,7 @@ export default function DataTable() {
           </thead>
           <tbody>
             {data.map((item:TProduct, index) => (
-              <tr key={index} className="odd:bg-gray-50 even:bg-gray-100 hover:bg-blue-50 transition duration-300">
+              <tr key={index} className="odd:bg-gray-50 even:bg-white hover:bg-blue-100 transition duration-300 ease-in-out shadow-md">
                 <td className="p-4 border-b">{item.POLYMER}</td>
                 <td className="p-4 border-b">{item.CATEGORY}</td>
                 <td className="p-4 border-b">{item.BRAND}</td>
@@ -90,6 +91,7 @@ export default function DataTable() {
         >
           Next
         </button>
+      </div>
       </div>
     </div>
   );

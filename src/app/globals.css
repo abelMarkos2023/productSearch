@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+.bg-grad{
+  background: rgb(62,89,103);
+background: linear-gradient(142deg, rgba(62,89,103,1) 0%, rgba(54,85,102,1) 44%, rgba(62,89,103,1) 96%);
+}
+.bg-grad-1{
+  background: rgb(62,89,103);
+background: linear-gradient(142deg, rgba(62,89,103,1) 0%, rgba(30,79,112,0.7455357142857143) 44%, rgba(62,89,103,1) 96%);
+}
+.bg-grad-2{
+  background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(48,77,112,1) 100%);
+}
+.bg-grad-3{
+  background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(56,75,97,1) 100%);
+}
+.bg-grad-4{
+  background: rgb(59,36,50);
+background: linear-gradient(142deg, rgba(59,36,50,1) 1%, rgba(61,85,105,1) 47%);
+}
+.bg-grad-5{
+  background: rgb(132,160,157);
+background: linear-gradient(67deg, rgba(132,160,157,1) 0%, rgba(178,155,128,1) 44%, rgba(62,62,62,1) 96%);
+}
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

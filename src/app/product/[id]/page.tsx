@@ -61,9 +61,13 @@ export default function ProductDetail({ params }:{
       const res = await fetch(`/api/product/${id}`);
       const data = await res.json();
       setProduct(data);
-      const query = `${data?.POLYMER} ${data?.GRADE}`;
+      const query = `${data?.POLYMER} And Grade: ${data?.GRADE} And MFI : ${data.MFI} AND application : ${data.APPLICATION} `;
       const response = await fetch(`/api/google-search?query=${query}`);
       const result = await response.json();
+     // const serpData = await fetch(`/api/serpAPI?name=${data.POLYMER}&grade=${data.GRADE}`);
+
+      //const serpDataJson = await serpData.json();
+      //console.log("SerpData ", serpDataJson);
       setGoogleProducts(result.data.items);
     };
     fetchProduct();
@@ -77,7 +81,7 @@ export default function ProductDetail({ params }:{
     <>
       {/* Hero Section */}
       <div 
-        className="h-[50vh] flex flex-col items-center justify-center bg-cover bg-center px-6 mb-12 text-white text-center"
+        className="h-[50vh] flex flex-col items-center justify-center bg-cover bg-center  text-white text-center"
         style={{ backgroundImage: "url('/bg3.webp')" }}
       >
         <h1 className="text-5xl md:text-6xl font-bold drop-shadow-lg">{product?.BRAND} - {product?.GRADE}</h1>
@@ -85,7 +89,8 @@ export default function ProductDetail({ params }:{
       </div>
 
       {/* Content Layout */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-8">
+      <div className="w-full bg-grad-5 h-screen">
+      <div className="max-w-[90vw] mx-auto py-4 grid lg:grid-cols-2 gap-8">
         {/* Product Details (Sticky) */}
         <div className="bg-[#1E293B] text-white p-8 rounded-lg shadow-lg h-fit sticky top-20">
           <h2 className="text-2xl font-semibold mb-4">Product Details</h2>
@@ -100,7 +105,7 @@ export default function ProductDetail({ params }:{
         {/* Google Search Results (Scrollable) */}
         <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-h-[70vh] overflow-y-auto">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Google Search Results</h2>
-          {googleProducts.length > 0 ? (
+          {googleProducts?.length > 0 ? (
             googleProducts.map((product, index) => (
               <div key={index} className="mb-6 p-4 border-b border-gray-300">
                 <h3 className="text-lg font-semibold text-gray-900">{product.title}</h3>
@@ -126,6 +131,7 @@ export default function ProductDetail({ params }:{
             <h3 className="text-center text-gray-600">No Matching Products</h3>
           )}
         </div>
+      </div>
       </div>
     </>
   );
