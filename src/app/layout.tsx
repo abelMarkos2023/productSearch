@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SearchProvider } from "./context/SearchContext";
+import Image from "next/image";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +31,23 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SearchProvider>
+          {/* Navbar */}
+        <nav className="w-full bg-white bg-opacity-90 shadow-md py-4 px-4 md:px-12 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+          <Link href={'/'} className="text-2xl font-bold text-gray-800">
+            <Image src={`/sitelogo.svg`} alt='Site Logo' height={20} className='h-12 w-40 md:w-80' width={40} />
+          </Link>
+          <ul className="p-0 flex space-x-2 md:space-x-6">
+            <li><Link href="/" className="text-gray-600 hover:text-blue-600">Home</Link></li>
+            <li><Link href="/products" className="text-gray-600 hover:text-blue-600">Products</Link></li>
+          </ul>
+        </nav>
           {children}
         </SearchProvider>
         
       </body>
-      <script async src="https://cse.google.com/cse.js?cx=c1b45ecaee5804e48">
-</script>
+      
+        
+
 
     </html>
   );

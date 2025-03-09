@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import GoogleSandbox from '@/components/GoogleSandbox';
 
 type GoogleSearchResult = {
   kind: string;
@@ -61,20 +62,46 @@ export default function ProductDetail({ params }:{
       const res = await fetch(`/api/product/${id}`);
       const data = await res.json();
       setProduct(data);
-      const query = `${data?.POLYMER} And Grade: ${data?.GRADE} And MFI : ${data.MFI} AND application : ${data.APPLICATION} `;
+      //AND application : ${data.APPLICATION}
+      const query = `${data?.POLYMER} `;
+
+      console.log(query)
       const response = await fetch(`/api/google-search?query=${query}`);
       const result = await response.json();
-     // const serpData = await fetch(`/api/serpAPI?name=${data.POLYMER}&grade=${data.GRADE}`);
-
-      //const serpDataJson = await serpData.json();
-      //console.log("SerpData ", serpDataJson);
-      setGoogleProducts(result.data.items);
+      // const serpData = await fetch(`/api/serpAPI?name=${data.POLYMER}&grade=${data.GRADE}`);
+      // console.log('google data',result)
+      // const serpDataJson = await serpData.json();
+      // console.log("SerpData ", serpDataJson);
+      console.log('results',result)
+     setGoogleProducts([...result.items]);
     };
     fetchProduct();
   }, [params]);
 
+  useEffect(() => {
+
+    const CX2 = process.env.NEXT_PUBLIC_CX2
+
+    console.log('CX2',CX2)
+    const script = document.createElement('script');
+    script.src = `https://cse.google.com/cse.js?cx=${CX2}`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+
+  
+
   if (!product) {
-    return <div className="text-center text-gray-700 text-lg mt-20">Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh]">
+        {/* Spinner */}
+        <div className="w-24 h-24 border-12 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+  
+        {/* Loading Text */}
+        <p className="mt-4 text-gray-700 text-2xl font-medium">Fetching product details...</p>
+      </div>
+    );
   }
 
   return (
@@ -105,6 +132,7 @@ export default function ProductDetail({ params }:{
         {/* Google Search Results (Scrollable) */}
         <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-h-[70vh] overflow-y-auto">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Google Search Results</h2>
+          <GoogleSandbox />
           {googleProducts?.length > 0 ? (
             googleProducts.map((product, index) => (
               <div key={index} className="mb-6 p-4 border-b border-gray-300">
@@ -139,134 +167,6 @@ export default function ProductDetail({ params }:{
 
 
 
-// 'use client';
-// import { useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import Image from 'next/image';
-
-// type GoogleSearchResult = {
-//   kind: string; // "customsearch#result"
-//   title: string;
-//   htmlTitle: string;
-//   link: string;
-//   displayLink: string;
-//   formattedUrl: string;
-//   htmlFormattedUrl: string;
-//   snippet?: string;
-//   htmlSnippet?: string;
-//   mime?: string; // e.g., "application/pdf"
-//   fileFormat?: string;
-//   pagemap?: {
-//     cse_thumbnail?: {
-//       src: string;
-//       width: string;
-//       height: string;
-//     }[];
-//     cse_image?: {
-//       src: string;
-//     }[];
-//     metatags?: {
-//       moddate?: string;
-//       creator?: string;
-//       creationdate?: string;
-//       producer?: string;
-//       author?: string;
-//       title?: string;
-//       snippet?: string;
-//     }[];
-//   };
-// };
-
-
-// export default function ProductDetail({ params }) {
-//   const [product, setProduct] = useState(null);
-//   const [googleProducts,setGoogleProducts] = useState<GoogleSearchResult[]>([]);
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const fetchProduct = async () => {
-//         const { id } = await params;
-
-//         console.log(id)
-//         const res = await fetch(`/api/product/${id}`);
-//         const data = await res.json();
-//         setProduct(data);
-//         const query = `${data?.POLYMER} ${data?.GRADE} `;
-//         const response = await fetch(`/api/google-search?query=${query}`);
-//         const result = await response.json();
-//         console.log(result)
-//         setGoogleProducts(result.data.items);
-//     };
-    
-//     fetchProduct();
-//   }, [params]);
 
 
   
-
-//   if (!product) {
-//     return <div className="text-center text-white text-lg mt-20">Loading...</div>;
-//   }
-
-//   return (
-//     <>
-//     <div 
-//       className="h-[50vh] flex flex-col items-center bg-cover bg-center px-6 mb-12"
-//       style={{ 
-//         backgroundImage: "url('/bg3.webp')",
-//         backgroundSize: "cover",
-//         backgroundPosition: "center",
-//         backgroundRepeat: "no-repeat",
-//       }}
-//     >
-//       {/* Navbar */}
-//       <nav className="w-full bg-white bg-opacity-90 shadow-md py-4 px-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-//         <h2 className="text-2xl font-bold text-gray-800">Product Detail</h2>
-//         <button onClick={() => router.back()} className="text-gray-600 hover:text-blue-600">Back</button>
-//       </nav>
-
-//       {/* Hero Section */}
-//       <div className="flex flex-col items-center justify-center text-center text-white py-32">
-//         <h1 className="text-7xl font-bold drop-shadow-lg">{product.BRAND} - {product.GRADE}</h1>
-//         <p className="text-4xl font-semibold mt-4 drop-shadow-md">{product.CATEGORY}</p>
-//       </div>
-//       </div>
-
-//       {/* Product Details */}
-//       <div className="grid lg:grid-cols-2 gap-4 max-w-7xl mx-auto">
-//       <div className="bg-[#7fc6d9] bg-opacity-90 p-8 rounded-lg shadow-lg w-ful text-white text-lg">
-//         <p><strong>Polymer:</strong> {product.POLYMER}</p>
-//         <p><strong>Category:</strong> {product.CATEGORY}</p>
-//         <p><strong>Brand:</strong> {product.BRAND}</p>
-//         <p><strong>Grade:</strong> {product.GRADE}</p>
-//         <p><strong>MFI:</strong> {product.MFI}</p>
-//         <p><strong>Application:</strong> {product.APPLICATION}</p>
-//       </div>
-//       <div className="bg-[#7fc6d9] bg-opacity-90 p-8 rounded-lg shadow-lg w-ful text-white text-lg">
-
-//         <div className="text-3xl text-center font-semibold">Google Search Result</div>
-//         {
-//             googleProducts.length > 0 ? (googleProducts.map((product:GoogleSearchResult, index) => (
-//               <div key={index}>
-//                   <h2 className="text-lg font-semibold text-gray-800">{product.title}</h2>
-//                   <p className="text-gray-600 font-medium">{product.snippet}</p>
-//                  {
-//               product.pagemap?.cse_image?.[0]?.src ? (
-//                 <Image 
-//                   width={300} 
-//                   height={400} 
-//                   src={product.pagemap.cse_image[0].src} 
-//                   alt={product.title} 
-//                 />
-//               ) : (
-//                 <p className="text-gray-600">No image available</p>
-//               )
-//               }
-//               </div>
-//           )) ) : <h1>No Matching products</h1>
-//         }
-//       </div>
-//       </div>
-//     </>
-//   );
-// }

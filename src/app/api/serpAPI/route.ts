@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import SerpApi from 'google-search-results-nodejs';
+//import SerpApi from 'google-search-results-nodejs';
 
 const API_KEY = process.env.API_KEY; // Store this in your .env file
+
+const locations = ["India", "United Kingdom", "Germany"];
 
 export async function GET(req: NextRequest) {
   try {
@@ -43,17 +45,36 @@ export async function GET(req: NextRequest) {
 //     // Construct the search query
 //     const query = `${name}  "Grade: ${grade}" `;
 
-    const search = new SerpApi.GoogleSearch(API_KEY);
+const fetchResults = async (query) => {
+  const results = await Promise.all(
+    locations.map(async (location) => {
+      const response = await fetch(
+        `https://serpapi.com/search.json?q=${query}&location=${location}&api_key=${API_KEY}`
+      );
+      const data = await response.json();
+
+      return data;
+    })
+  );
+
+  //console.log("Search Results:", results);
+
+  return results;
+};
+
+   const serpResults = fetchResults(searchQuery);
+
+    //const search = new SerpApi.GoogleSearch(API_KEY);
 
     // Perform Google search
-    const result = await new Promise((resolve, reject) => {
-      search.json({ q: searchQuery, location: "United States", hl: "en" }, (data) => {
-        if (data) resolve(data);
-        else reject(new Error("Failed to fetch search results"));
-      });
-    });
+    // const result = await new Promise((resolve, reject) => {
+    //   search.json({ q: searchQuery, location: "us", hl: "en" }, (data) => {
+    //     if (data) resolve(data);
+    //     else reject(new Error("Failed to fetch search results"));
+    //   });
+    // });
 
-    return NextResponse.json(result);
+    return NextResponse.json(serpResults);
   } catch (error) {
     return NextResponse.json({ error: 'Google Search failed', details: error }, { status: 500 });
   }

@@ -2,7 +2,6 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import type { TProduct } from './product/[id]/page';
 import { useSearch } from './context/SearchContext';
 
@@ -34,23 +33,16 @@ export default function ProductSearch() {
   return (
     <div>
       <div 
-        className="h-[75vh] flex flex-col gap-8 bg-cover bg-center px-6"
+        className="h-[40vh] flex flex-col gap-8 bg-cover bg-center px-6"
         style={{ 
           backgroundImage: "url('/bg1.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          minHeight: "75vh"
+          minHeight: "40vh"
         }}
       >
-        {/* Navbar */}
-        <nav className="w-full bg-white bg-opacity-90 shadow-md py-4 px-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-          <h2 className="text-2xl font-bold text-gray-800">Product Search</h2>
-          <ul className="flex space-x-6">
-            <li><Link href="/" className="text-gray-600 hover:text-blue-600">Home</Link></li>
-            <li><Link href="/products" className="text-gray-600 hover:text-blue-600">Products</Link></li>
-          </ul>
-        </nav>
+        
 
         {/* Hero Section */}
         <div className="flex flex-col items-center gap-8 justify-center flex-grow text-center text-white py-20">
