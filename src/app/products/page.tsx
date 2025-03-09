@@ -31,13 +31,8 @@ export default function DataTable() {
 
       {/* Hero Section */}
       <div
-        className="h-[50vh] flex flex-col items-center justify-center text-center text-white px-6"
-        style={{ 
-          backgroundImage: "url('/list.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+        className="h-[50vh] bg-grad-7 flex flex-col items-center justify-center text-center text-white px-6"
+        
       >
         <h1 className="text-7xl font-bold drop-shadow-lg">Explore Our Products</h1>
         <p className="text-4xl mt-4 drop-shadow-md">Browse through our extensive product catalog</p>
