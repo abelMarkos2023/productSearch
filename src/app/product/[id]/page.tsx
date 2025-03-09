@@ -73,7 +73,7 @@ export default function ProductDetail({ params }:{
       // const serpDataJson = await serpData.json();
       // console.log("SerpData ", serpDataJson);
       console.log('results',result)
-     setGoogleProducts([...result.items]);
+     setGoogleProducts([...result?.items]);
     };
     fetchProduct();
   }, [params]);
