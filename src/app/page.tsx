@@ -33,20 +33,14 @@ export default function ProductSearch() {
   return (
     <div>
       <div 
-        className="h-[40vh] flex flex-col gap-8 bg-cover bg-center px-6"
-        style={{ 
-          backgroundImage: "url('/bg1.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          minHeight: "40vh"
-        }}
+        className="h-[50vh] flex bg-grad-4 flex-col gap-8 bg-cover bg-center p-6"
+       
       >
         
 
         {/* Hero Section */}
         <div className="flex flex-col items-center gap-8 justify-center flex-grow text-center text-white py-20">
-          <h1 className="text-5xl font-bold drop-shadow-lg">Find Your Perfect Product</h1>
+          <h1 className="text-2xl md:text-5xl font-bold drop-shadow-lg">Find Your Perfect Product</h1>
           <p className="text-lg mt-4 drop-shadow-md">Search for a product by any field and discover the details instantly.</p>
           
           {/* Search Box at Bottom of Hero */}
@@ -61,7 +55,7 @@ export default function ProductSearch() {
               />
               <button 
                 onClick={handleSearch} 
-                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+                className="md:px-6 md:py-3 px-2 py-1 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
                 disabled={loading}
               >
                 {loading ? (

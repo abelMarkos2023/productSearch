@@ -24,6 +24,10 @@ background: linear-gradient(142deg, rgba(59,36,50,1) 1%, rgba(61,85,105,1) 47%);
   background: rgb(132,160,157);
 background: linear-gradient(67deg, rgba(132,160,157,1) 0%, rgba(178,155,128,1) 44%, rgba(62,62,62,1) 96%);
 }
+.bg-grad-6{
+  background: rgb(62,103,103);
+background: linear-gradient(60deg, rgba(62,103,103,1) 13%, rgba(253,187,45,0.8855917366946778) 100%);
+}
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

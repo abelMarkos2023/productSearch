@@ -15,7 +15,7 @@ export  async function GET(req:NextRequest) {
 
     if (!query) return NextResponse.json({ error: "Query is required" }, { status: 500 })
 
-    const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY2;
+    const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
     const SEARCH_ENGINE_ID = process.env.NEXT_PUBLIC_SEARCH_ENGINE_ID2;
 
     console.log(API_KEY,SEARCH_ENGINE_ID)

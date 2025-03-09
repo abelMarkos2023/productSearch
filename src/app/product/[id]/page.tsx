@@ -108,15 +108,15 @@ export default function ProductDetail({ params }:{
     <>
       {/* Hero Section */}
       <div 
-        className="h-[50vh] flex flex-col items-center justify-center bg-cover bg-center  text-white text-center"
-        style={{ backgroundImage: "url('/bg3.webp')" }}
+        className="h-[50vh] bg-grad-5 flex flex-col items-center justify-center bg-cover bg-center  text-white text-center"
+       
       >
-        <h1 className="text-5xl md:text-6xl font-bold drop-shadow-lg">{product?.BRAND} - {product?.GRADE}</h1>
-        <p className="text-2xl md:text-3xl font-semibold mt-4 drop-shadow-md">{product?.CATEGORY}</p>
+        <h1 className="text-2xl md:text-6xl font-bold drop-shadow-lg">{product?.BRAND} - {product?.GRADE}</h1>
+        <p className="text-xl md:text-3xl font-semibold mt-4 drop-shadow-md">{product?.CATEGORY}</p>
       </div>
 
       {/* Content Layout */}
-      <div className="w-full bg-grad-5 h-screen">
+      <div className="w-full bg-grad-6  h-screen">
       <div className="max-w-[90vw] mx-auto py-4 grid lg:grid-cols-2 gap-8">
         {/* Product Details (Sticky) */}
         <div className="bg-[#1E293B] text-white p-8 rounded-lg shadow-lg h-fit sticky top-20">
