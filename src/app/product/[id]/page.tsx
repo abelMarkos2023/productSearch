@@ -3,6 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import GoogleSandbox from '@/components/GoogleSandbox';
+import type { TDataSheetResult, TSimilarProduct } from '@/app/types';
+import SimilarProductsSlider from '@/components/SimilarProductsSlider';
+// import PdfReader from '@/components/PdfReader';
+// import ReadPdf from '@/components/ReadPdf';
+import PdfViewer from '@/components/ReadPdf';
 
 type GoogleSearchResult = {
   kind: string;
@@ -54,26 +59,39 @@ export default function ProductDetail({ params }:{
 }) {
   const [product, setProduct] = useState<TProduct | null>(null);
   const [googleProducts, setGoogleProducts] = useState<GoogleSearchResult[]>([]);
+  const [rapidapiProducts, setRapidapiProducts] = useState<TSimilarProduct[]>([]);
+  const [dataSheet,setDataSheet] = useState<TDataSheetResult | null>(null)
  // const router = useRouter();
 
   useEffect(() => {
     const fetchProduct = async () => {
       const { id } = await params;
-      const res = await fetch(`/api/product/${id}`);
-      const data = await res.json();
-      setProduct(data);
-      //AND application : ${data.APPLICATION}
-      const query = `${data?.POLYMER} `;
-
-      console.log(query)
-      const response = await fetch(`/api/google-search?query=${query}`);
-      const result = await response.json();
-      // const serpData = await fetch(`/api/serpAPI?name=${data.POLYMER}&grade=${data.GRADE}`);
-      // console.log('google data',result)
-      // const serpDataJson = await serpData.json();
-      // console.log("SerpData ", serpDataJson);
-      console.log('results',result)
-     setGoogleProducts([...result?.items]);
+      try {
+        const res = await fetch(`/api/product/${id}`);
+        const data = await res.json();
+        setProduct(data);
+        //AND application : ${data.APPLICATION}
+        const query = `${data?.POLYMER} And Grade = ${data?.GRADE} AND Category = ${data?.CATEGORY}`;
+  
+        
+        const response = await fetch(`/api/google-search?query=${query}&polymer=${data?.POLYMER}&grade=${data?.GRADE}&category=${data?.CATEGORY}&mfi=${data?.MFI}&brand=${data?.BRAND}`);
+        const googleSearchresult = await response.json();
+  
+  
+    
+        //searching similar products from rapidAPI
+        const rapidapi = await fetch(`/api/rapidapi?query=${data?.POLYMER}&category=${data?.CATEGORY}&sort=relevance`);
+        const rabidapiData = await rapidapi.json();
+        console.log(dataSheet)
+       setGoogleProducts([...googleSearchresult?.data?.items]);
+       setDataSheet(googleSearchresult?.dataSheetData?.items[0])
+       setRapidapiProducts(rabidapiData?.data?.products)
+       console.log('rapid api data',rabidapiData)
+        console.log('googleSearchresult',googleSearchresult)
+      
+      } catch (error) {
+      console.log(error)    
+      }
     };
     fetchProduct();
   }, [params]);
@@ -108,18 +126,20 @@ export default function ProductDetail({ params }:{
     <>
       {/* Hero Section */}
       <div 
-        className="h-[50vh] bg-grad-5 flex flex-col items-center justify-center bg-cover bg-center  text-white text-center"
+        className="h-[30vh] bg-grad-5 flex flex-col items-center justify-center  text-white text-center p-4"
        
       >
-        <h1 className="text-2xl md:text-6xl font-bold drop-shadow-lg">{product?.BRAND} - {product?.GRADE}</h1>
-        <p className="text-xl md:text-3xl font-semibold mt-4 drop-shadow-md">{product?.CATEGORY}</p>
+        <h1 className="text-2xl md:text-3xl font-bold drop-shadow-lg">{product?.BRAND} - {product?.GRADE}</h1>
+        <p className="text-xl md:text-xl font-semibold mt-4 drop-shadow-md">{product?.CATEGORY}</p>
       </div>
 
       {/* Content Layout */}
-      <div className="w-full bg-grad-6  h-screen">
+      <div className="w-full bg-grad-6  min-h-screen max-w-full overflow-hidden">
       <div className="max-w-[90vw] mx-auto py-4 grid lg:grid-cols-2 gap-8">
         {/* Product Details (Sticky) */}
-        <div className="bg-[#1E293B] text-white p-8 rounded-lg shadow-lg h-fit sticky top-20">
+        <div className="space-y-4 max-w-full">
+          {/* Product Detail */}
+          <div className="bg-[#1E293B] text-white p-8 rounded-lg shadow-lg h-fit">
           <h2 className="text-2xl font-semibold mb-4">Product Details</h2>
           <p><strong>Polymer:</strong> {product.POLYMER}</p>
           <p><strong>Category:</strong> {product.CATEGORY}</p>
@@ -128,10 +148,14 @@ export default function ProductDetail({ params }:{
           <p><strong>MFI:</strong> {product.MFI}</p>
           <p><strong>Application:</strong> {product.APPLICATION}</p>
         </div>
+        <div className="product-slider max-w-full overflow-hidden">
+          <SimilarProductsSlider similarProducts={rapidapiProducts} />
+        </div>
+        </div>
 
         {/* Google Search Results (Scrollable) */}
-        <div className="bg-gray-100 p-6 rounded-lg shadow-lg max-h-[70vh] overflow-y-auto">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Google Search Results</h2>
+        <div className="max-w-[90vw] md:max-w-[680px] lg:max-w-2xl bg-gray-100 p-6 rounded-lg shadow-lg h-[300px] lg:h-[80vh] max-h-[80vh] overflow-y-auto pb-20 lg:pb-0">
+         
           <GoogleSandbox />
           {googleProducts?.length > 0 ? (
             googleProducts.map((product, index) => (
@@ -159,6 +183,17 @@ export default function ProductDetail({ params }:{
             <h3 className="text-center text-gray-600">No Matching Products</h3>
           )}
         </div>
+      </div>
+
+      <div className="mt-12">
+        <h3 className="text-2xl text-center font-semibold">
+          Product DataSheet
+        </h3>
+       
+        {dataSheet?.link && (
+          
+          <PdfViewer pdfUrl={dataSheet?.link} />
+        )}
       </div>
       </div>
     </>

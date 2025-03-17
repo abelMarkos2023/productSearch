@@ -5,6 +5,12 @@ import { Configuration } from 'webpack';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config :Configuration) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        canvas: false, // Fix: Ensures `config.resolve.alias` is defined before modifying
+      };
+    }// Optional: if you run into canvas-related issues
     config.plugins = config.plugins || []; // ✅ Ensure plugins array exists
 
     config.plugins.push({

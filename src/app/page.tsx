@@ -33,7 +33,7 @@ export default function ProductSearch() {
   return (
     <div>
       <div 
-        className="h-[50vh] flex bg-grad-4 flex-col gap-8 bg-cover bg-center p-6"
+        className="h-[60vh] flex bg-grad-4 flex-col gap-8 bg-cover bg-center p-6"
        
       >
         
@@ -41,7 +41,7 @@ export default function ProductSearch() {
         {/* Hero Section */}
         <div className="flex flex-col items-center gap-8 justify-center flex-grow text-center text-white py-20">
           <h1 className="text-2xl md:text-5xl font-bold drop-shadow-lg">Find Your Perfect Product</h1>
-          <p className="text-lg mt-4 drop-shadow-md">Search for a product by any field and discover the details instantly.</p>
+          <p className="text-lg mt-4 drop-shadow-md">Search for a product by Name, Brand, Grade, or MFI value. To search by MFI, type {"MFI"} followed by the value with a space in between..</p>
           
           {/* Search Box at Bottom of Hero */}
           <div className="relative z-10 flex justify-center w-full pb-10">
@@ -93,7 +93,7 @@ export default function ProductSearch() {
                 ))}
               </div>
             ) : (
-              <p className="text-white text-center text-xl">Search for a product by name, brand, grade, or type {"mfi 2"} to search for a specific MFI value product.</p>
+              <p className="text-white text-center text-xl">Start Searching For Products</p>
             )
           }
         </div>
