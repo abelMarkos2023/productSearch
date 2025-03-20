@@ -148,9 +148,14 @@ export default function ProductDetail({ params }:{
           <p><strong>MFI:</strong> {product.MFI}</p>
           <p><strong>Application:</strong> {product.APPLICATION}</p>
         </div>
-        <div className="product-slider max-w-full overflow-hidden">
-          <SimilarProductsSlider similarProducts={rapidapiProducts} />
-        </div>
+
+        {
+          rapidapiProducts?.length > 0 ? ( 
+          <div className="product-slider max-w-full overflow-hidden">
+            <SimilarProductsSlider similarProducts={rapidapiProducts} />
+          </div>) : null
+        }
+       
         </div>
 
         {/* Google Search Results (Scrollable) */}
@@ -186,8 +191,9 @@ export default function ProductDetail({ params }:{
       </div>
 
       <div className="mt-12">
-        <h3 className="text-2xl text-center font-semibold">
+        <h3 className="text-2xl w-3xl mx-auto flex-col md:flex-row  text-center font-semibold flex justify-between items-center">
           Product DataSheet
+          <a href={dataSheet?.link} target='_blank' className="py-2 text-[14px] px-6 rounded-lg shadow-lg bg-blue-400 text-white">View Datasheet on Origin website</a>
         </h3>
        
         {dataSheet?.link && (

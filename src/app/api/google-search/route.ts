@@ -12,7 +12,7 @@ export  async function GET(req:NextRequest) {
 
     const query = searchParams.get("query");
     const polymer = searchParams.get("polymer");
-    const brand = searchParams.get("brand");
+    //const brand = searchParams.get("brand");
     const grade = searchParams.get("grade");
    // const { query } = req.query;
 
@@ -28,7 +28,7 @@ export  async function GET(req:NextRequest) {
     
 
 
-  const dataSheetQuery = `POLYMER ${polymer} Grade=${grade} Brand=${brand} datasheet filetype:pdf`
+  const dataSheetQuery = `POLYMER ${polymer} Grade=${grade} datasheet filetype:pdf`
     try {
         const response = await fetch(url);
         const data = await response.json()
